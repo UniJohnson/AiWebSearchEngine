@@ -9,3 +9,5 @@ to activate venv use:
 to install requirements use:
 ```pip install -r requirements.txt```
 
+test the crawler at:
+https://vm009.rz.uos.de/crawl/

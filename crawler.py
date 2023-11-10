@@ -1,15 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
 
+# initialize visit stack with starting url
+visit_stack = ['https://vm009.rz.uos.de/crawl/']
 
-r = requests.get('https://www.uos.de')
+def visit(url):
+    # remove url from visit stack
+    visit_stack.remove(url)
 
-# parse html into usable object
-soup = BeautifulSoup(r.content, 'html.parser')
+    r = requests.get(url)
 
-# find all links
-links = soup.find_all('a')
+    # parse html into usable object
+    soup = BeautifulSoup(r.content, 'html.parser')
 
-# print all links
-for link in links:
-    print(link.get('href'))
+    # find all links
+    links = soup.find_all('a')
+
+    # get all the hrefs from the links and extend the visit stack with all links
+    visit_stack.extend([link.get('href') for link in links])
+
+    # print the visit stack
+    print(visit_stack)
+
