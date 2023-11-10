@@ -11,3 +11,6 @@ to install requirements use:
 
 test the crawler at:
 https://vm009.rz.uos.de/crawl/
+
+start webserver with:
+flask --app myapp.py run
