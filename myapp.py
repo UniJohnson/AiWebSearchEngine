@@ -17,3 +17,8 @@ def reverse():
 
     #  return the reverse.html and pass the rev argument
     return render_template('reverse.html', rev=rev[::-1])
+
+# deliver css
+@app.route('/style.css')
+def style():
+    return app.render_template('style.css')
