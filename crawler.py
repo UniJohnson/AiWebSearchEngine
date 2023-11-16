@@ -26,9 +26,14 @@ def visit(url):
         # make sure to get the full url
 
         # get the full url
-        full_url = url + link.get('href')
+        # if the link is relative, then we need to add the base url
+        if link.get('href').startswith('https'):
+            full_url = link.get('href')
+        else:
+            full_url = url + link.get('href')
 
         if full_url not in visited:
+            # the visit stack appends the full url "https://www.uni-osnabrueck.de/startseite/https://www.twitter.com/uniosnabrueck/", which is wrong
             visit_stack.append(full_url)
     
     # recursively visit all links in the visit stack
@@ -39,7 +44,6 @@ def visit(url):
         print("to visit:" + url_to_be_visited)
         print("visited:" + str(visited))
 
-
         # visit the url
         visit(url_to_be_visited)
 
@@ -49,6 +53,7 @@ def visit(url):
 visit("https://www.uni-osnabrueck.de/startseite/")
 # problem, if href is twitter.com, then url+href appends a lot.
 # maybe we can fix this with whooshh.
+# no, whoosh is for indexing, not for crawling
 
 for page in visited:
     print(page)
