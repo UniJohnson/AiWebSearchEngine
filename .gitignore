@@ -4,3 +4,6 @@ myenv
 myenv/
 myenv/*
 __pycache__
+indexdir
+indexdir/
+indexdir/*

@@ -1,9 +1,18 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 # initialize visit stack with starting url
 visit_stack = []
 visited = []
+
+from whoosh.index import create_in
+from whoosh.fields import *
+
+#init whoosh first with a schema
+schema = Schema(title=TEXT(stored=True), content=TEXT)
+ix = create_in("indexdir", schema)
+writer = ix.writer()
 
 # depth first search
 def visit(url):
@@ -17,8 +26,9 @@ def visit(url):
     soup = BeautifulSoup(r.content, 'html.parser')
 
     #index every url we come across using whoosh
-    #TODO
-
+    
+    # add the url to the index, using the title and the content of the page
+    writer.add_document(title=soup.title.string, content=soup.get_text())
 
     # find all links
     links = soup.find_all('a')
@@ -51,10 +61,12 @@ def visit(url):
         # visit the url
         visit(url_to_be_visited)
 
-visit("https://vm009.rz.uos.de/crawl/")
-# problem, if href is twitter.com, then url+href appends a lot.
-# maybe we can fix this with whooshh.
-# no, whoosh is for indexing, not for crawling
+try:
+    visit("https://vm009.rz.uos.de/crawl/")
+except:
+    print("Crawler stopped as intended.")
+    pass
 
-for page in visited:
-    print(page)
+print("Crawling finished. Writing index to disk.")
+
+writer.commit()
