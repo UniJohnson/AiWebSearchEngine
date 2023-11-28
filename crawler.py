@@ -1,18 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
+import ownIndex
 
 # initialize visit stack with starting url
 visit_stack = []
 visited = []
-
-from whoosh.index import create_in
-from whoosh.fields import *
-
-#init whoosh first with a schema
-schema = Schema(title=TEXT(stored=True), content=TEXT)
-ix = create_in("indexdir", schema)
-writer = ix.writer()
 
 # depth first search
 def visit(url):
@@ -25,10 +18,12 @@ def visit(url):
     # parse html into usable object
     soup = BeautifulSoup(r.content, 'html.parser')
 
-    #index every url we come across using whoosh
-    
-    # add the url to the index, using the title and the content of the page
-    writer.add_document(title=soup.title.string, content=soup.get_text())
+    if soup.title is not None and soup.get_text() is not None:
+        ownIndex.add_document(soup.title.string, soup.get_text())
+    else:
+        print("No title or text found. This was the title and text:")
+        print(soup.title)
+        print(soup.get_text())
 
     # find all links
     links = soup.find_all('a')
@@ -67,6 +62,6 @@ except:
     print("Crawler stopped as intended.")
     pass
 
-print("Crawling finished. Writing index to disk.")
+print("Indexing finished. Writing to disk.")
 
-writer.commit()
+ownIndex.commit_writer()

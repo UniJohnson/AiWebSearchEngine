@@ -2,6 +2,8 @@
 
 from flask import Flask, render_template, request
 
+import ownIndex
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -13,11 +15,16 @@ def index():
 @app.route('/search')
 def reverse():
     # grab the GET request arguments
-    rev = request.args['search']
+    searchRequest = request.args['search']
 
     # return a search page with the search_results
-    search_results = [rev]
-    
+    search_results = []
+
+    indexing_result = ownIndex.get_data_from_index(searchRequest)
+    print("results:" + str(indexing_result))
+    print("index:" + str(ownIndex.print_index()))
+
+    search_results.append(indexing_result)
 
     return render_template('search.html', search=search_results)
 
