@@ -47,13 +47,15 @@ def visit(url):
         # visit the url
         visit(url_to_be_visited)
 
-        
+
+
     
 
-visit("https://www.uni-osnabrueck.de/startseite/")
+visit("https://de.wikipedia.org/wiki/Britney_Spears")
 # problem, if href is twitter.com, then url+href appends a lot.
 # maybe we can fix this with whooshh.
 # no, whoosh is for indexing, not for crawling
 
 for page in visited:
     print(page)
+
