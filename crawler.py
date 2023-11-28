@@ -16,6 +16,10 @@ def visit(url):
     # parse html into usable object
     soup = BeautifulSoup(r.content, 'html.parser')
 
+    #index every url we come across using whoosh
+    #TODO
+
+
     # find all links
     links = soup.find_all('a')
 
@@ -47,10 +51,7 @@ def visit(url):
         # visit the url
         visit(url_to_be_visited)
 
-        
-    
-
-visit("https://www.uni-osnabrueck.de/startseite/")
+visit("https://vm009.rz.uos.de/crawl/")
 # problem, if href is twitter.com, then url+href appends a lot.
 # maybe we can fix this with whooshh.
 # no, whoosh is for indexing, not for crawling

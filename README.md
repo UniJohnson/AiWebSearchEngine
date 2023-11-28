@@ -14,3 +14,6 @@ https://vm009.rz.uos.de/crawl/
 
 start webserver with:
 flask --app myapp.py run
+
+run crawler with:
+python3 crawler.py
