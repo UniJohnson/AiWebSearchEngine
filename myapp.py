@@ -10,13 +10,16 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/reverse')
+@app.route('/search')
 def reverse():
     # grab the GET request arguments
-    rev = request.args['rev']
+    rev = request.args['search']
 
-    #  return the reverse.html and pass the rev argument
-    return render_template('reverse.html', rev=rev[::-1])
+    # return a search page with the search_results
+    search_results = [rev]
+    
+
+    return render_template('search.html', search=search_results)
 
 # deliver css
 #@app.route('/style.css')
