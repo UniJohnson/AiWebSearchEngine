@@ -18,13 +18,6 @@ def visit(url):
     # parse html into usable object
     soup = BeautifulSoup(r.content, 'html.parser')
 
-    if soup.title is not None and soup.get_text() is not None:
-        ownIndex.add_document(soup.title.string, soup.get_text())
-    else:
-        print("No title or text found. This was the title and text:")
-        print(soup.title)
-        print(soup.get_text())
-
     # find all links
     links = soup.find_all('a')
 
@@ -62,6 +55,21 @@ except:
     print("Crawler stopped as intended.")
     pass
 
-print("Indexing finished. Writing to disk.")
+# crawl the visited urls and add them to the index
 
+try:
+    for url in visited:
+        print("crawling url:" + url)
+        r = requests.get(url)
+        soup = BeautifulSoup(r.content, 'html.parser')
+
+        if soup.title is not None and soup.get_text() is not None:
+            ownIndex.add_document(soup.title.string, soup.get_text())
+except:
+    print("Writing to index stopped as intended.")
+    pass
+
+# commit the writer
 ownIndex.commit_writer()
+
+print("Everything finished.")
