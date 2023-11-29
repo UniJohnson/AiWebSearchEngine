@@ -11,7 +11,7 @@ def search_index(search_term):
     print("searching index")
     with read_index.searcher() as searcher:
         # find entries with the words 'first' AND 'last'
-        query = QueryParser("content", read_index.schema).parse("*")
+        query = QueryParser("content", read_index.schema).parse(search_term)
         results = searcher.search(query)
         
         result_array = []

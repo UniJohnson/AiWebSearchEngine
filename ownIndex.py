@@ -12,21 +12,6 @@ schema = Schema(title=TEXT(stored=True), content=TEXT)
 ix = create_in("indexdir", schema)
 writer = ix.writer()
 
-read_index = open_dir("indexdir")
-
-# grab data from index
-def get_data_from_index(search_term):
-
-    with read_index.searcher() as searcher:
-        # find entries with the words 'first' AND 'last'
-        query = QueryParser("content", read_index.schema).parse("*")
-        results = searcher.search(query)
-        
-        # print all results
-        for r in results:
-            print(r)
-
-        return results
 
 def add_document(param_title, param_content):
     print("added document to index. Still need to write the commit")
