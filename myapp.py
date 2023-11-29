@@ -14,11 +14,14 @@ def search_index(search_term):
         query = QueryParser("content", read_index.schema).parse("*")
         results = searcher.search(query)
         
+        result_array = []
+
         # print all results
         for r in results:
-            print(r)
+            result_array.append(str(r))
+        
 
-    return results
+    return result_array
 
 
 app = Flask(__name__)
@@ -36,9 +39,6 @@ def search():
     # grab the GET request arguments
     searchRequest = request.args['search']
 
-    # return a search page with the search_results
-    search_results = []
-
     # get data from index
     #indexing_result = ownIndex.get_data_from_index(searchRequest)
    
@@ -46,16 +46,7 @@ def search():
     print("from function search")
     print(result)
 
-    # add the results to the search_results list
-    for r in result:
-       # turn the r object into a string
-       print(result)
-       
-       # access the title from the whoosh.searching.Hit
-       #print(r["title"])
-       
-
-    return render_template('search.html', search=search_results)
+    return render_template('search.html', search=result)
 
 # deliver css
 #@app.route('/style.css')
