@@ -67,9 +67,3 @@ def search():
     print(result)
 
     return render_template('search.html', search=result, query=searchRequest)
-
-
-import traceback
-@app.errorhandler(500)
-def internal_error(exception):
-   return "<pre>"+traceback.format_exc()+"</pre>"
