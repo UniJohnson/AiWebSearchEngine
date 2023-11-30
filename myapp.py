@@ -18,8 +18,28 @@ def search_index(search_term):
 
         # print all results
         for r in results:
-            result_array.append(str(r))
-        
+            
+            title = r['title']
+            content = r['content']
+            url = r['url']
+
+            # clean up line breaks
+            title = title.replace("\n", "")
+            title = title.replace("\r", "")
+            title = title.replace("\t", "")
+            content = content.replace("\n", "")
+            content = content.replace("\r", "")
+            content = content.replace("\t", "")
+            url = url.replace("\n", "")
+            url = url.replace("\r", "")
+            url = url.replace("\t", "")
+            # clean up white spaces
+            title = title.strip()
+            content = content.strip()
+            url = url.strip()
+            
+            # store an object with title, content and url
+            result_array.append({'title': title, 'content': content, 'url': url})
 
     return result_array
 
@@ -46,7 +66,7 @@ def search():
     print("from function search")
     print(result)
 
-    return render_template('search.html', search=result)
+    return render_template('search.html', search=result, query=searchRequest)
 
 # deliver css
 #@app.route('/style.css')

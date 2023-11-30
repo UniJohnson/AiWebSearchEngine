@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+# import the index, this will also create the indexdir anew
 import ownIndex
 
 # initialize visit stack with starting url
@@ -64,7 +65,7 @@ try:
         soup = BeautifulSoup(r.content, 'html.parser')
 
         if soup.title is not None and soup.get_text() is not None:
-            ownIndex.add_document(soup.title.string, soup.get_text())
+            ownIndex.add_document(soup.title.string, soup.get_text()[:100], url)
 except:
     print("Writing to index stopped as intended.")
     pass
