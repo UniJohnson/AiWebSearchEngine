@@ -1,3 +1,10 @@
+# FOR THELEN:
+
+run crawler.py to test the crawler. This will re-run the creating command of the index via whoosh (ix = create_in("indexdir", schema)). So it's best to delete the indexdir before running the crawler(at least that's what we always did).
+
+flask server works as expected. Run
+flask --app myapp.py run
+
 # AiWebSearchEngine
 
 create venv using:

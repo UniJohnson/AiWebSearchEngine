@@ -68,7 +68,8 @@ def search():
 
     return render_template('search.html', search=result, query=searchRequest)
 
-# deliver css
-#@app.route('/style.css')
-#def style():
-#    return app.render_template('style.css')
+
+import traceback
+@app.errorhandler(500)
+def internal_error(exception):
+   return "<pre>"+traceback.format_exc()+"</pre>"
